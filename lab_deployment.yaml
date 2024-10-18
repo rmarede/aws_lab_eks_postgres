@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: lab-app-deployment
+  labels:
+    app: lab-app
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: lab-app
+  template:
+    metadata:
+      labels:
+        app: lab-app
+    spec:
+      containers:
+      - name: lab-app
+        image: awscrossjoinlab/crossjoin-lab-k8spostgres:latest
+        env:
+        - name: JDBC_URL
+          value: "jdbc:postgresql://lab-db1.c5e4o8a6ate8.eu-west-3.rds.amazonaws.com:5432/labdb1"
+        - name: JDBC_USER
+          value: "postgres"
+        - name: JDBC_PASSWORD
+          value: "crossjoin"
